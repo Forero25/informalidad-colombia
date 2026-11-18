@@ -17,7 +17,12 @@ jobs:
           import json; d=json.load(open('busca.json'))
           r=d.get('result',d); rows=r.get('rows',r) if isinstance(r,dict) else r
           for x in rows: print(x.get('id'), x.get('idno'), x.get('title'), x.get('year_start'), x.get('year_end'))
-          " || head -c 2000 busca.json
+          " ; head -c 3000 busca.json; echo
+          curl -sSL -A "informalidad-colombia (github.com/Forero25)" "https://microdatos.dane.gov.co/index.php/catalog/central/search?sk=GEIH+2025" -o busca.html -w "%{http_code}\n"
+          python3 -c "
+          import re; h=open('busca.html',encoding='utf-8',errors='ignore').read()
+          for m in sorted(set(re.findall(r'catalog/(\\d+)[^>]*>([^<]{5,120})<',h)))[:80]: print(m)
+          "
       - name: Recursos del estudio
         if: ${{ inputs.id != '' }}
         run: |
