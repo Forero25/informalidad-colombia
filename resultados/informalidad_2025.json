@@ -738,6 +738,11 @@
    "sector": 44.72839101524994
   }
  },
+ "detalles": {
+  "pct_mujeres_empleo_domestico": 91.62931269251787,
+  "jovenes_inf_oficial_formal_tamano_pct_en_empresas_de_6_o_mas": 87.14367660709438,
+  "inf_oficial_que_cotizan_pct_cuenta_propia": 77.29594888572485
+ },
  "registros_por_dpto": {
   "05": 23514,
   "08": 16114,

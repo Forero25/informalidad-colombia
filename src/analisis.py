@@ -65,6 +65,12 @@ def main():
                                          "pct_ocupados": float(100 * w[D.oficial != D[b]].sum() / w.sum())}
                                      for b in D if b != "oficial"}
     out["mensual"] = {int(m): {k2: tasa(D[k2], d.MES == m) for k2 in D} for m in range(1, 13)}
+    dom = d.P6430 == 3
+    jov = (d.P6040 <= 24) & D.oficial & ~D.tamano
+    x = D.oficial & ~D.pension
+    out["detalles"] = {"pct_mujeres_empleo_domestico": float(100 * w[dom & (d.P3271 == 2)].sum() / w[dom].sum()),
+                       "jovenes_inf_oficial_formal_tamano_pct_en_empresas_de_6_o_mas": float(100 * w[jov & (d.P3069 >= 4)].sum() / w[jov].sum()),
+                       "inf_oficial_que_cotizan_pct_cuenta_propia": float(100 * w[x & (d.P6430 == 4)].sum() / w[x].sum())}
     # celdas pequeñas: se marcan para no publicar tasas con pocos registros
     out["registros_por_dpto"] = {str(v): int((d.DPTO == v).sum()) for v in sorted(d.DPTO.unique())}
     os.makedirs("resultados", exist_ok=True)
